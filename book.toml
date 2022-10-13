@@ -1,0 +1,15 @@
+[book]
+authors = ["Billy Chan <ccw.billy.123@gmail.com>"]
+language = "en"
+multilingual = false
+src = "src"
+title = "SeaORM Cookbook"
+
+[output.html]
+mathjax-support = true
+default-theme = "rust"
+preferred-dark-theme = "navy"
+site-url = "/sea-orm-cookbook/"
+git-repository-url = "https://github.com/SeaQL/sea-orm-cookbook/"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/SeaQL/sea-orm-cookbook/edit/master/{path}"
