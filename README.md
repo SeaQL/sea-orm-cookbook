@@ -14,12 +14,6 @@ To run the tutorial book as local host first install [mdbook](https://crates.io/
 $ cargo install mdbook
 ```
 
-Then switch to the book folder in the current tutorial directory
-
-```sh
-$ cd tutorials-book
-```
-
 Then run mdbook
 
 ```sh
