@@ -6,4 +6,5 @@
 - [Entity without primary key column](004-entity-without-primary-key-column.md)
 - [Set column value with database function](006-set-column-value-with-db-value.md)
 - [Run migration at application startup](007-run-migration-at-app-startup.md)
+- [`Iden` trait is not implemented](008-iden-trait-is-not-implemented.md)
 - [How to load nested relation eagerly?](001-eager-load-nested-relation.md)
