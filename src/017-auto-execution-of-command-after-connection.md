@@ -1,6 +1,6 @@
 # Automatically execute SQL after connecting to database
 
-SeaORM does not provide direct support for this matter, but is it possible to. The method involves establishing the connection with [`sqlx`](https://crates.io/crates/sqlx) then converting it back to a `sea_orm::DatabaseConnection` object.
+SeaORM does not provide direct support for it, but it is still possible. It involves establishing the connection with [`sqlx`](https://crates.io/crates/sqlx) then converting it into a `sea_orm::DatabaseConnection` object.
 
 ```rust, no_run
 // Only copy the one that you are using
