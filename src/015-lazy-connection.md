@@ -2,7 +2,7 @@
 
 > Note that this means a new connection has to be established everytime you access the database, which might cause performance and desynchronisation issue. For example, your program might not know the database is defective until the first access.
 
-It is possible to create a `DatabaseConnection` object without actually connecting to the database until needed. The method is to set `min_connections` to `0` in connect options:
+It is possible to create a `DatabaseConnection` object with no minimum active connection in the connection pool until needed. The method is to set `min_connections` to `0` in connect options:
 
 ```rust, no_run
 let mut options = ConnectOptions::new(url);
