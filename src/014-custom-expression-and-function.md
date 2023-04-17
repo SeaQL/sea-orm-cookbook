@@ -81,7 +81,7 @@ Func::cust(MyFunction);
 Func::cust(MyFunction).arg("hello");
 
 // `MY_FUNCTION('a', 'b', 'c', 'd')`
-Func::cust(MyFunction).args(vec!["a", "b", "c", "d"]);
+Func::cust(MyFunction).args(["a", "b", "c", "d"]);
 ```
 
 `Func::cust` can be used in many places, with the following being a few of them:
