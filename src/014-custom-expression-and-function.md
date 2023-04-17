@@ -30,7 +30,7 @@ They both evaluate to `SELECT id FROM thing WHERE field = "asdf"`
 The example below is self explanatory:
 
 ```rust, no_run
-let values = vec!["asdf", "fdas"];
+let values = ["asdf", "fdas"];
 
 // Evaluates to `SELECT id FROM thing WHERE field = "asdf" OR field = "fdsa"`
 Query::select()
