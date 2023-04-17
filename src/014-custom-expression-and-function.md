@@ -1,6 +1,6 @@
 # How to use custom expressions and functions
 ## Custom Expressions
-Custom expressions are merely just [`SimpleExpr`](https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html) that you write yourself in SQL syntax instead of using the library's API. A huge amount of functions uses this type as parameters, see [this](https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html?search=SimpleExpr).
+Custom expressions are merely just [`SimpleExpr`](https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html) that you write yourself in SQL syntax instead of using the library's API. Many functions uses this type as parameters, see [this](https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html?search=SimpleExpr).
 
 Assume we have the following table:
 ```rust, no_run
