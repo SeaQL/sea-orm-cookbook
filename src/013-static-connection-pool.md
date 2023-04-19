@@ -14,9 +14,21 @@ let db = Database::connect(url).await?;
 db.close().await?;
 ```
 
-This connection is, however, only locally accessible, and each establishment of connection is very costly. To solve it, one would like to create a static connection that only has to be established once. Doing so requires the [`lazy_static`](https://crates.io/crates/lazy_static) and [`async-std`](https://crates.io/crates/async-std) crate.
+This connection is, however, only locally accessible, and each establishment of connection is very costly. To solve it, one would like to create a static connection that only has to be established once. Doing so requires the [`lazy_static`](https://crates.io/crates/lazy_static) and any runtime crate. Here are 2 of them.
 
+1. [`tokio`](https://crates.io/crates/tokio)
+```rust, no_run
+lazy_static::lazy_static! {
+    static ref DB: DatabaseConnection = {
+        tokio::runtime::Runtime::new().unwrap().block_on(async {
+            // You have to define `url` yourself!
+            Database::connect(url).await.unwrap()
+        })
+    };
+}
+```
 
+2. [`async-std`](https://crates.io/crates/async-std)
 ```rust, no_run
 lazy_static::lazy_static! {
     static ref DB: DatabaseConnection = {
