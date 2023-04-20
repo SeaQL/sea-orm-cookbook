@@ -12,7 +12,7 @@
 - [Stream query result - no method named try_next](010-stream-query-result-no-method-named-try-next.md)
 - [How to mutate the underlying SeaQuery statement?](011-how-to-mutate-the-underlying-sea-query-statement.md)
 - [How to define a struct with DeriveIntoActiveModel outside entity module?](012-how-to-define-a-struct-with-derive-into-active-model-outside-entity-module.md)
-<!-- - [](013) -->
+- [Static Connection](013-static-connection-pool.md)
 - [Custom Expression and Function](014-custom-expression-and-function.md)
 - [Create database connections lazily](015-lazy-connection.md)
 - [Configure `search_path` in PostgreSQL](016-search-path.md)
