@@ -19,9 +19,9 @@
 - [Automatically execute SQL after connecting to database](017-auto-execution-of-command-after-connection.md)
 <!-- - [](018) -->
 <!-- - [](019) -->
-<!-- - [](020) -->
-<!-- - [](021) -->
-<!-- - [](022) -->
+- [Check if columns are set](020-column-set-check.md)
+- [Count the number of select result without fetching](021-count-select-result.md)
+- [Bulk ActiveModel field setting](022-bulk-active-model-field-setting.md)
 <!-- - [](023) -->
 <!-- - [](024) -->
 <!-- - [](025) -->
