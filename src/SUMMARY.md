@@ -18,7 +18,7 @@
 - [Configure `search_path` in PostgreSQL](016-search-path.md)
 - [Automatically execute SQL after connecting to database](017-auto-execution-of-command-after-connection.md)
 <!-- - [](018) -->
-<!-- - [](019) -->
+- [Different forms of result](019-different-forms.md)
 <!-- - [](020) -->
 <!-- - [](021) -->
 <!-- - [](022) -->
