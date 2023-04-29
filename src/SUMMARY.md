@@ -23,9 +23,9 @@
 <!-- - [](021) -->
 <!-- - [](022) -->
 <!-- - [](023) -->
-<!-- - [](024) -->
-<!-- - [](025) -->
-<!-- - [](026) -->
+- [Defining newtypes](024-define-newtypes.md)
+- [ActiveModelBehavior not being triggered](025-behaviors-not-being-triggered.md)
+- [Subquery](026-subquery.md)
 <!-- - [](027) -->
 <!-- - [](028) -->
 <!-- - [](029) -->
