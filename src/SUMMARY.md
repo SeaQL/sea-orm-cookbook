@@ -17,7 +17,7 @@
 - [Create database connections lazily](015-lazy-connection.md)
 - [Configure `search_path` in PostgreSQL](016-search-path.md)
 - [Automatically execute SQL after connecting to database](017-auto-execution-of-command-after-connection.md)
-<!-- - [](018) -->
+- [Raw and Unprepared Statements](018-raw-and-unprepared.md)
 <!-- - [](019) -->
 <!-- - [](020) -->
 <!-- - [](021) -->
