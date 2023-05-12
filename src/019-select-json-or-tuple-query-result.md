@@ -1,4 +1,4 @@
-# Different forms of output
+# Select JSON or tuple query result
 
 For example we have the following table:
 ```rust, no_run
