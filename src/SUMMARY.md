@@ -22,7 +22,7 @@
 - [Check if columns are set](020-column-set-check.md)
 - [Count the number of select result without fetching](021-count-select-result.md)
 - [Bulk ActiveModel field setting](022-bulk-active-model-field-setting.md)
-- [Database Change Audition](023-database-change-audition.md)
+- [Database Change Capture](023-database-change-capture.md)
 - [Defining newtypes](024-define-newtypes.md)
 - [ActiveModelBehavior not being triggered](025-behaviors-not-being-triggered.md)
 - [Subquery](026-subquery.md)
