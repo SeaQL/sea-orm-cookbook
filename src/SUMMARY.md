@@ -18,7 +18,7 @@
 - [Configure `search_path` in PostgreSQL](016-search-path.md)
 - [Automatically execute SQL after connecting to database](017-auto-execution-of-command-after-connection.md)
 - [Raw and Unprepared Statements](018-raw-and-unprepared.md)
-<!-- - [](019) -->
+- [Select JSON or tuple query result](019-select-json-or-tuple-query-result.md)
 - [Check if columns are set](020-column-set-check.md)
 - [Count the number of select result without fetching](021-count-select-result.md)
 - [Bulk ActiveModel field setting](022-bulk-active-model-field-setting.md)
