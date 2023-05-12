@@ -17,15 +17,15 @@
 - [Create database connections lazily](015-lazy-connection.md)
 - [Configure `search_path` in PostgreSQL](016-search-path.md)
 - [Automatically execute SQL after connecting to database](017-auto-execution-of-command-after-connection.md)
-<!-- - [](018) -->
+- [Raw and Unprepared Statements](018-raw-and-unprepared.md)
 <!-- - [](019) -->
-<!-- - [](020) -->
-<!-- - [](021) -->
-<!-- - [](022) -->
+- [Check if columns are set](020-column-set-check.md)
+- [Count the number of select result without fetching](021-count-select-result.md)
+- [Bulk ActiveModel field setting](022-bulk-active-model-field-setting.md)
 - [Database Change Audition](023-database-change-audition.md)
-<!-- - [](024) -->
-<!-- - [](025) -->
-<!-- - [](026) -->
+- [Defining newtypes](024-define-newtypes.md)
+- [ActiveModelBehavior not being triggered](025-behaviors-not-being-triggered.md)
+- [Subquery](026-subquery.md)
 <!-- - [](027) -->
 <!-- - [](028) -->
 <!-- - [](029) -->
