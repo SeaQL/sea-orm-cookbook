@@ -7,5 +7,5 @@ A naive way to approach this problem is to fetch the selection from the database
 let selection = table::Entity::find();
 
 // Count the number of selection
-selection.count().await?
+selection.count(db).await?
 ```
