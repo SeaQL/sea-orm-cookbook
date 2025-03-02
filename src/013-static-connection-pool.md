@@ -36,12 +36,12 @@ async fn main() {
 }
 ```
 
-Now any scopes inside of the same module can access the `DB` static variable and use it as a connection to the database without establishing connection everytime. For example
+Now any scopes inside of the same module can access the `DB_CLIENT` static variable and use it as a connection to the database without establishing connection everytime. For example
 
 ```rust, no_run
 fn a_function() -> Result<(), !> {
-    DB.do_something().await?;
+    DB_CLIENT.do_something().await?;
 }
 ```
 
-For `DB` to be visible from other modules, simply add `pub` in front of `static ref DB:...`.
+For `DB_CLIENT` to be visible from other modules, simply add `pub` in front of `static DB_CLIENT:...`.
