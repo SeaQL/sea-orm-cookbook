@@ -1,0 +1,1148 @@
+<!DOCTYPE HTML>
+<html lang="en" class="rust sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SeaORM Cookbook</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        <script src="/sea-ql.js"></script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">SeaORM Cookbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/SeaQL/sea-orm-cookbook/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="seaorm-cookbook"><a class="header" href="#seaorm-cookbook">SeaORM Cookbook</a></h1>
+<p>The SeaORM Cookbook is a collection of frequently asked questions (FAQs) and the best practice of SeaORM.</p>
+<p>This book is incomplete and we are still working on it. Any editing and content suggestion are welcomed! Please feel free to submit a PR or file an issue on <a href="https://github.com/SeaQL/sea-orm-cookbook">GitHub</a>.</p>
+<blockquote>
+<p>Tips: you can search by keyword (open the search prompt by pressing "S" key).</p>
+</blockquote>
+<pre><code>   ____                 ___   ____   __  __        /\
+  / ___|   ___   __ _  / _ \ |  _ \ |  \/  |      {.-}
+  \___ \  / _ \ / _` || | | || |_) || |\/| |     ;_.-'\
+   ___) ||  __/| (_| || |_| ||  _ &lt; | |  | |    {    _.}_
+  |____/  \___| \__,_| \___/ |_| \_\|_|  |_|     \.-' /  `,
+                                                  \  |    /
+  An async &amp; dynamic ORM for Rust                  \ |  ,/
+  ===============================                   \|_/
+</code></pre>
+<p>Getting Started with SeaORM:</p>
+<ul>
+<li><a href="https://www.sea-ql.org/SeaORM">documentation</a></li>
+<li><a href="https://www.sea-ql.org/sea-orm-tutorial">step-by-step tutorials</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples">integration examples</a></li>
+</ul>
+<p>Join our Discord server to chat with others in the SeaQL community!</p>
+<ul>
+<li><a href="https://discord.com/invite/uCPdDXzbdv">invitation link</a></li>
+</ul>
+<p>If you like what we do, consider starring, commenting, sharing and contributing!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-load-nested-relation-eagerly"><a class="header" href="#how-to-load-nested-relation-eagerly">How to load nested relation eagerly?</a></h1>
+<blockquote>
+<p>If you are building a web API that queries nested relations extensively, consider building a GraphQL server. <a href="https://www.sea-ql.org/Seaography/">Seaography</a> is a GraphQL framework for building GraphQL resolvers using SeaORM entities. Read "<a href="https://www.sea-ql.org/blog/2022-09-27-getting-started-with-seaography/">Getting Started with Seaography</a>" to learn more.</p>
+</blockquote>
+<p>The <a href="https://docs.rs/sea-orm/*/sea_orm/query/trait.LoaderTrait.html">LoaderTrait</a> provides an API to load related entities in batches.</p>
+<p>Consider this one to many relation:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let cake_with_fruits: Vec&lt;(cake::Model, Vec&lt;fruit::Model&gt;)&gt; = Cake::find()
+    .find_with_related(Fruit)
+    .all(db)
+    .await?;
+<span class="boring">}</span></code></pre></pre>
+<p>The SQL query generated is:</p>
+<pre><code class="language-sql">SELECT
+    "cake"."id" AS "A_id",
+    "cake"."name" AS "A_name",
+    "fruit"."id" AS "B_id",
+    "fruit"."name" AS "B_name",
+    "fruit"."cake_id" AS "B_cake_id"
+FROM "cake"
+LEFT JOIN "fruit" ON "cake"."id" = "fruit"."cake_id"
+ORDER BY "cake"."id" ASC
+</code></pre>
+<p>This is great, but if the N is a large number, the 1 side's (Cake) data will be duplicated a lot. This results in more data being transferred over the wire. In the many to many case, both sides may duplicate. Using the Loader would ensure each model is transferred only once. For this reason, SeaORM currently can't eager load more than 2 entities together.</p>
+<p>The following loads the same data as above, but with two queries:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let cakes: Vec&lt;cake::Model&gt; = Cake::find().all(db).await?;
+let fruits: Vec&lt;Vec&lt;fruit::Model&gt;&gt; = cakes.load_many(Fruit, db).await?;
+
+for (cake, fruits) in cakes.into_iter().zip(fruits.into_iter()) { .. }
+<span class="boring">}</span></code></pre></pre>
+<pre><code class="language-sql">SELECT "cake"."id", "cake"."name" FROM "cake"
+SELECT "fruit"."id", "fruit"."name", "fruit"."cake_id" FROM "fruit" WHERE "fruit"."cake_id" IN (..)
+</code></pre>
+<p>You can stack these together:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let cakes: Vec&lt;cake::Model&gt; = Cake::find().all(db).await?;
+let fruits: Vec&lt;Vec&lt;fruit::Model&gt;&gt; = cakes.load_many(Fruit, db).await?;
+let fillings: Vec&lt;Vec&lt;filling::Model&gt;&gt; = cakes.load_many_to_many(Filling, CakeFilling, db).await?;
+<span class="boring">}</span></code></pre></pre>
+<p>In an advanced use case, you can apply filters on the related entity:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let fruits_in_stock: Vec&lt;Vec&lt;fruit::Model&gt;&gt; = cakes.load_many(
+    fruit::Entity::find().filter(fruit::Column::Stock.gt(0i32))
+    db
+).await?;
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="conflicting-implementation-of-fromm-or-intoactivemodela"><a class="header" href="#conflicting-implementation-of-fromm-or-intoactivemodela">Conflicting implementation of <code>From&lt;M&gt;</code> or <code>IntoActiveModel&lt;A&gt;</code></a></h1>
+<p>Say, we have a entity define inside the entity crate.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::entity::prelude::*;
+
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[sea_orm(table_name = "posts")]
+pub struct Model {
+    #[sea_orm(primary_key)]
+    pub id: i32,
+    pub title: String,
+    pub text: String,
+}
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {}
+
+impl ActiveModelBehavior for ActiveModel {}
+<span class="boring">}</span></code></pre></pre>
+<p>And, we have a struct to hold user's input in the API crate.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+pub struct InsertModel {
+    pub title: String,
+    pub text: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Then, we need to convert <code>InsertModel</code> to <code>entity::post::ActiveModel</code> for inserting it to the database. One of the below impl block will perform the conversion for us. However, if you place the impl block inside the API crate you might result in compile errors.</p>
+<ol>
+<li>
+<p>Implements <code>From&lt;InsertModel&gt;</code> for <code>ActiveModel</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::Set;
+use entity::post::ActiveModel;
+
+impl From&lt;InsertModel&gt; for ActiveModel {
+    fn from(model: InsertModel) -&gt; Self {
+        ActiveModel {
+            title: Set(model.title),
+            text: Set(model.text),
+            ..Default::default()
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The error messages:</p>
+<pre><code>error[E0119]: conflicting implementations of trait `std::convert::From&lt;InsertModel&gt;` for type `entity::post::ActiveModel`
+    |
+    | impl From&lt;InsertModel&gt; for ActiveModel {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: conflicting implementation in crate `entity`:
+            - impl std::convert::From&lt;&lt;Entity as EntityTrait&gt;::Model&gt; for ActiveModel;
+</code></pre>
+</li>
+<li>
+<p>Implements <code>IntoActiveModel&lt;ActiveModel&gt;</code> for <code>InsertModel</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::{Set, IntoActiveModel};
+use entity::post::ActiveModel;
+
+impl IntoActiveModel&lt;ActiveModel&gt; for InsertModel {
+    fn into_active_model(self) -&gt; ActiveModel {
+        ActiveModel {
+            title: Set(self.title),
+            text: Set(self.text),
+            ..Default::default()
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The error messages:</p>
+<pre><code>error[E0119]: conflicting implementations of trait `actix_example_core::sea_orm::IntoActiveModel&lt;entity::post::ActiveModel&gt;` for type `InsertModel`
+    |
+    | impl IntoActiveModel&lt;ActiveModel&gt; for InsertModel {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: conflicting implementation in crate `entity`:
+            - impl IntoActiveModel&lt;ActiveModel&gt; for &lt;Entity as EntityTrait&gt;::Model;
+</code></pre>
+</li>
+</ol>
+<p>Why and how to get over it?</p>
+<p><a href="https://smallcultfollowing.com/babysteps/blog/2015/01/14/little-orphan-impls/">Rust's orphan rules</a> are the reason behind this error. We could move the <code>InsertModel</code> struct and its conversion implementation blocks into entity crate.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::{entity::prelude::*, IntoActiveModel, Set};
+
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[sea_orm(table_name = "posts")]
+pub struct Model {
+    #[sea_orm(primary_key)]
+    pub id: i32,
+    pub title: String,
+    pub text: String,
+}
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {}
+
+impl ActiveModelBehavior for ActiveModel {}
+
+// Define InsertModel and its conversion implementation blocks
+
+#[derive(Debug)]
+pub struct InsertModel {
+    pub title: String,
+    pub text: String,
+}
+
+impl From&lt;InsertModel&gt; for ActiveModel {
+    fn from(model: InsertModel) -&gt; Self {
+        ActiveModel {
+            title: Set(model.title),
+            text: Set(model.text),
+            ..Default::default()
+        }
+    }
+}
+
+impl IntoActiveModel&lt;ActiveModel&gt; for InsertModel {
+    fn into_active_model(self) -&gt; ActiveModel {
+        ActiveModel {
+            title: Set(self.title),
+            text: Set(self.text),
+            ..Default::default()
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-run-seaquery-statement-on-seaorm"><a class="header" href="#how-to-run-seaquery-statement-on-seaorm">How to run SeaQuery statement on SeaORM?</a></h1>
+<p>I have a complex query written in SeaQuery and I wish to run it on SeaORM.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let attr_stmt = Query::select()
+    .column(EntityAttrIden::Name.prefixed_with_table())
+    .column(EntityIden::Datatype)
+    .from(EntityIden::Entity)
+    .join(
+        JoinType::Join,
+        EntityAttrIden::EntityAttribute,
+        Expr::tbl(EntityIden::Entity, EntityIden::Id)
+            .equals(EntityAttrIden::EntityAttribute, EntityAttrIden::EntityId),
+    )
+    .and_where(Expr::col(EntityIden::Name.prefixed_with_table()).eq(selector.of.clone()))
+    .to_owned();
+<span class="boring">}</span></code></pre></pre>
+<p>You need to first build the SeaQuery statement into <a href="https://docs.rs/sea-orm/latest/sea_orm/struct.Statement.html"><code>Statement</code></a> with <a href="https://docs.rs/sea-orm/latest/sea_orm/trait.StatementBuilder.html"><code>StatementBuilder</code></a>.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let attr_stmt = Query::select() // Snip...
+
+let builder = db.get_database_backend();
+let stmt: Statement = builder.build(&amp;attr_stmt);
+<span class="boring">}</span></code></pre></pre>
+<p>Then, you can run the statement and fetch the result:</p>
+<ol>
+<li>As <a href="https://docs.rs/sea-orm/latest/sea_orm/struct.QueryResult.html"><code>QueryResult</code></a></li>
+</ol>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let attr_stmt = Query::select() // Snip...
+let builder = db.get_database_backend();
+
+let query_res: Option&lt;QueryResult&gt; = db
+    .query_one(builder.build(&amp;attr_stmt))
+    .await?;
+
+let query_res = query_res.unwrap();
+let name: String = query_res.try_get("", "name")?;
+
+let query_res_vec: Vec&lt;QueryResult&gt; = db
+    .query_all(builder.build(&amp;attr_stmt))
+    .await?;
+<span class="boring">}</span></code></pre></pre>
+<ol start="2">
+<li>Or, as any struct that implemented <a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.FromQueryResult.html"><code>FromQueryResult</code></a></li>
+</ol>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let attr_stmt = Query::select() // Snip...
+let builder = db.get_database_backend();
+
+#[derive(Debug, Clone, FromQueryResult)]
+struct AttributeMeta {
+    name: String,
+    datatype: Datatype,
+}
+
+let attributes: Vec&lt;AttributeMeta&gt; = AttributeMeta::find_by_statement(builder.build(&amp;attr_stmt))
+    .all(db)
+    .await?
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="entity-without-primary-key-column"><a class="header" href="#entity-without-primary-key-column">Entity without primary key column</a></h1>
+<p>In SeaORM, we assume every entity has a primary key. A table without primary key breaks many assumptions about the concept of Entity, and hence methods like <code>find_by_id</code> is not possible.</p>
+<pre><code>error: Entity must have a primary key column. See &lt;https://github.com/SeaQL/sea-orm/issues/485&gt; for details.
+ --&gt; src/entity/lineitem.rs:4:35
+  |
+4 | #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
+  |                                   ^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the derive macro `DeriveEntityModel` (in Nightly builds, run with -Z macro-backtrace for more info)
+</code></pre>
+<p>We strongly recommend adding a primary key to every entity if modifying the schema is an option.</p>
+<pre><code class="language-diff">use sea_orm::entity::prelude::*;
+
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[sea_orm(table_name = "lineitem")]
+pub struct Model {
++   #[sea_orm(primary_key)]
++   pub id: i32,
+    pub price: Decimal,
+    pub quantity: i32,
+    pub order_id: i32,
+    pub cake_id: i32,
+}
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {
+    // ...
+}
+
+impl ActiveModelBehavior for ActiveModel {}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="select-rows-matching-any-of-the-enum-values"><a class="header" href="#select-rows-matching-any-of-the-enum-values">Select rows matching any of the enum values</a></h1>
+<p>Let say, we want to select any <code>breakfast</code> serving everyday tea and breakfast tea.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::entity::prelude::*;
+
+// `Tea` enum
+#[derive(Debug, Clone, PartialEq, Eq, EnumIter, DeriveActiveEnum)]
+#[sea_orm(rs_type = "String", db_type = "Enum", enum_name = "tea")]
+pub enum Tea {
+    #[sea_orm(string_value = "EverydayTea")]
+    EverydayTea,
+    #[sea_orm(string_value = "BreakfastTea")]
+    BreakfastTea,
+    #[sea_orm(string_value = "EarlGreyTea")]
+    EarlGreyTea,
+}
+<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::entity::prelude::*;
+
+// `breakfast` entity
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[sea_orm(table_name = "breakfast")]
+pub struct Model {
+    #[sea_orm(primary_key)]
+    pub id: i32,
+    pub bread: String,
+    pub tea: Tea,
+}
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {}
+
+impl ActiveModelBehavior for ActiveModel {}
+<span class="boring">}</span></code></pre></pre>
+<p>We can perform the select as follows:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::sea_query::{BinOper, Expr};
+
+// Filter `IS IN (EverydayTea, BreakfastTea)`
+let rows: Vec&lt;breakfast::Model&gt; = Entity::find()
+    .filter(
+        Expr::col(breakfast::Column::Tea)
+            .binary(BinOper::In, Expr::tuple([
+                Tea::EverydayTea.as_enum(),
+                Tea::BreakfastTea.as_enum(),
+            ]))
+    )
+    .all(db)
+    .await?
+    .unwrap();
+
+// Or, inverse of it, filter `IS NOT IN (EarlGreyTea)`
+let rows: Vec&lt;breakfast::Model&gt; = Entity::find()
+    .filter(
+        Expr::col(breakfast::Column::Tea)
+            .binary(BinOper::NotIn, Expr::tuple([Tea::EarlGreyTea.as_enum()]))
+    )
+    .all(db)
+    .await?
+    .unwrap();
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="set-column-value-with-database-function"><a class="header" href="#set-column-value-with-database-function">Set column value with database function</a></h1>
+<p>How can we set the expiry date of all fruits contains the word "Apple"?</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::entity::prelude::*;
+
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[sea_orm(table_name = "fruit")]
+pub struct Model {
+    #[sea_orm(primary_key)]
+    pub id: i32,
+    pub name: String,
+    pub expiry: Option&lt;DateTimeWithTimeZone&gt;,
+}
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {}
+
+impl ActiveModelBehavior for ActiveModel {}
+<span class="boring">}</span></code></pre></pre>
+<p>Since <a href="https://www.sea-ql.org/SeaORM/docs/basic-crud/update/#update-one">update one</a> only takes value instead of expression. We need <a href="https://www.sea-ql.org/SeaORM/docs/basic-crud/update/#update-many">update many</a> for this purpose.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::sea_query::Expr;
+
+// UPDATE `fruit` SET `expiry` = CURRENT_TIMESTAMP WHERE `fruit`.`name` LIKE '%Apple%'
+fruit::Entity::update_many()
+    .col_expr(fruit::Column::Expiry, Expr::current_timestamp())
+    .filter(fruit::Column::Name.contains("Apple"))
+    .exec(db)
+    .await?;
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="run-migration-at-application-startup"><a class="header" href="#run-migration-at-application-startup">Run migration at application startup</a></h1>
+<p>How to apply all pending migration at application startup?</p>
+<p>You can run the migration programmatically at startup by providing the database connection to the <code>Migrator::up</code> method.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Initialize database connection
+let db = Database::connect(&amp;db_url).await?;
+
+// Run all pending migrations
+Migrator::up(&amp;conn, None).await?;
+<span class="boring">}</span></code></pre></pre>
+<p>Checkout the examples below:</p>
+<ul>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/actix_example/api/src/lib.rs">Actix v4 Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/actix3_example/api/src/lib.rs">Actix v3 Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/axum_example/api/src/lib.rs">Axum Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/blob/master/examples/graphql_example/api/src/graphql/schema.rs">GraphQL Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/jsonrpsee_example/api/src/lib.rs">jsonrpsee Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/poem_example/api/src/lib.rs">Poem Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/rocket_example/api/src/lib.rs">Rocket Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/salvo_example/api/src/lib.rs">Salvo Example</a></li>
+<li><a href="https://github.com/SeaQL/sea-orm/tree/master/examples/tonic_example/api/src/lib.rs">Tonic Example</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iden-trait-is-not-implemented"><a class="header" href="#iden-trait-is-not-implemented"><code>Iden</code> trait is not implemented</a></h1>
+<p>The <code>Iden</code> trait is a construct to represent identifier in SQL statement.</p>
+<h2 id="static-identifier"><a class="header" href="#static-identifier">Static Identifier</a></h2>
+<p>Usually, identifier is static and Enum is a natural representation of it. You can define and implement <code>Iden</code> with the help of the derive macros.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::sea_query::Iden;
+
+#[derive(Debug, Iden)]
+enum User {
+    Table,
+    Id,
+}
+assert_eq!(Iden::to_string(&amp;User::Table), "user");
+assert_eq!(Iden::to_string(&amp;User::Id), "id");
+
+#[derive(Debug, Iden)]
+#[iden = "user"]
+enum Custom {
+    Table,
+    #[iden = "my_id"]
+    Id,
+    FirstName,
+}
+assert_eq!(Iden::to_string(&amp;Custom::Table), "user");
+assert_eq!(Iden::to_string(&amp;Custom::Id), "my_id");
+assert_eq!(Iden::to_string(&amp;Custom::FirstName), "first_name");
+<span class="boring">}</span></code></pre></pre>
+<h2 id="dynamic-identifier"><a class="header" href="#dynamic-identifier">Dynamic Identifier</a></h2>
+<p>However, if you have a dynamic identifier constructed at runtime, then you need <code>Alias</code> for this purpose.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use sea_orm::sea_query::{Alias, Iden};
+
+let iden = Alias::new("id");
+assert_eq!(Iden::to_string(&amp;iden), "id");
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="stream-query-result---no-method-named-try_next"><a class="header" href="#stream-query-result---no-method-named-try_next">Stream query result - no method named try_next</a></h1>
+<p>You can stream the query result to reduce memory allocation and improve efficiency.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Stream all fruits
+let mut stream = Fruit::find().stream(db).await?;
+
+while let Some(item) = stream.try_next().await? {
+    let item: fruit::ActiveModel = item.into();
+    // do something with item
+}
+<span class="boring">}</span></code></pre></pre>
+<p>However, you might encountered an error like <code>no method named try_next</code>. If that so, you need to update your <code>Cargo.toml</code> at your project root.</p>
+<pre><code class="language-toml  no_run">futures = "0.3"
+</code></pre>
+<p>Then, import <a href="https://docs.rs/futures/latest/futures/stream/trait.TryStreamExt.html">futures::TryStreamExt</a> into the scope.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Import the trait where `try_next` method is defined.
+use futures::TryStreamExt;
+
+// Stream all fruits
+let mut stream = Fruit::find().stream(db).await?;
+
+while let Some(item) = stream.try_next().await? {
+    let item: fruit::ActiveModel = item.into();
+    // do something with item
+}
+<span class="boring">}</span></code></pre></pre>
+<p>You're good to go. Compile the project again and enjoy!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-mutate-the-underlying-seaquery-statement"><a class="header" href="#how-to-mutate-the-underlying-seaquery-statement">How to mutate the underlying SeaQuery statement?</a></h1>
+<p>How can I borrow a mutable reference of <code>sea_query::SelectStatement</code> out of <code>Entity::find()</code>. So that I could add my custom window expression and select from a custom view etc.</p>
+<p>You can use the <code>QueryTrait::query()</code> method to borrow the underlying SeaQuery statement out of any SeaORM types implemented <code>QueryTrait</code> (<a href="https://docs.rs/sea-orm/latest/sea_orm/query/trait.QueryTrait.html#implementors">listed here</a>).</p>
+<pre><code class="language-rs">use sea_orm::QueryTrait;
+
+let find = cake::Entity::find();
+
+// Borrow `sea_query::SelectStatement` and customize it
+let select_stmt: &amp;mut sea_query::SelectStatement = find.query()
+    .expr_window_as(
+        Func::cust(RowNumber),
+        WindowStatement::partition_by(...),
+        Alias::new(...),
+    )
+    .from(...);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-define-a-struct-with-deriveintoactivemodel-outside-entity-module"><a class="header" href="#how-to-define-a-struct-with-deriveintoactivemodel-outside-entity-module">How to define a struct with DeriveIntoActiveModel outside entity module?</a></h1>
+<p>I know I can define a custom struct and derive <code>DeriveIntoActiveModel</code> which implements <code>IntoActiveModel</code> for me.</p>
+<pre><code class="language-rs">use sea_orm::entity::prelude::*;
+
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[sea_orm(table_name = "fruit")]
+pub struct Model {
+    #[sea_orm(primary_key)]
+    pub id: i32,
+    pub name: String,
+    pub cake_id: Option&lt;i32&gt;,
+}
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {}
+
+impl ActiveModelBehavior for ActiveModel {}
+
+// My custom ActiveModel
+#[derive(DeriveIntoActiveModel)]
+pub struct NewFruit {
+    pub name: String,
+    pub cake_id: i32,
+}
+</code></pre>
+<p>However, how can I define such custom struct in another module?</p>
+<p>All you need is one extra line that import the target <code>ActiveModel</code> into the scope.</p>
+<pre><code class="language-rs">mod post_model {
+    // Import the target ActiveModel into scope
+    use super::entity::cake::ActiveModel;
+
+    // My custom ActiveModel
+    #[derive(DeriveIntoActiveModel)]
+    pub struct NewFruit {
+        pub name: String,
+        pub cake_id: i32,
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-make-a-static-database-connection"><a class="header" href="#how-to-make-a-static-database-connection">How to make a static Database Connection</a></h1>
+<blockquote>
+<p>Read first: <a href="https://www.sea-ql.org/SeaORM/docs/install-and-config/connection/">Documentation on Connection Pool</a></p>
+</blockquote>
+<p>Everytime we access the database, we need to establish a connection, or as we call it, a "Connection Pool" beforehand. The most trivial way is to create the connection everytime we need to access it:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Establish connection
+let db = Database::connect(url).await?;
+
+/* Some operations on db */
+
+// Close connection
+db.close().await?;
+<span class="boring">}</span></code></pre></pre>
+<p>This connection is, however, only locally accessible, and each establishment of connection is very costly. To solve it, one would like to create a static connection that only has to be established once.</p>
+<pre><pre class="playground"><code class="language-rust  no_run">use tokio::sync::OnceCell;
+
+static DB_CLIENT: OnceCell&lt;DatabaseConnection&gt; = OnceCell::const_new();
+
+#[tokio::main]
+async fn main() {
+    DB_CLIENT
+        .get_or_init(|| async {
+            let database_url = "database_url".to_string();
+            let mut opt = ConnectOptions::new(database_url);
+            Database::connect(opt).await.unwrap()
+        })
+        .await;
+
+    let conn = DB_CLIENT.get().unwrap();
+
+}</code></pre></pre>
+<p>Now any scopes inside of the same module can access the <code>DB_CLIENT</code> static variable and use it as a connection to the database without establishing connection everytime. For example</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn a_function() -&gt; Result&lt;(), !&gt; {
+    DB_CLIENT.do_something().await?;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>For <code>DB_CLIENT</code> to be visible from other modules, simply add <code>pub</code> in front of <code>static DB_CLIENT:...</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-use-custom-expressions-and-functions"><a class="header" href="#how-to-use-custom-expressions-and-functions">How to use custom expressions and functions</a></h1>
+<h2 id="custom-expressions"><a class="header" href="#custom-expressions">Custom Expressions</a></h2>
+<p>Custom expressions are merely just <a href="https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html"><code>SimpleExpr</code></a> that you write yourself in SQL syntax instead of using the library's API. Many functions uses this type as parameters, see <a href="https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html?search=SimpleExpr">this</a>.</p>
+<p>Assume we have the following table:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>thing {
+    id: i32,
+    field: String,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Here is one example of the use of <code>Expr::cust</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Query::select()
+    .column(thing::Column::Id)
+    .from(thing::Table)
+    .and_where(Expr::cust("field = \"asdf\""));
+
+Query::select()
+    .column(thing::Column::Id)
+    .from(thing::Table)
+    .and_where(Expr::col(thing::Column::Field).eq("asdf"));
+<span class="boring">}</span></code></pre></pre>
+<p>They both evaluate to <code>SELECT id FROM thing WHERE field = "asdf"</code></p>
+<p>2 more advanced versions of <a href="https://docs.rs/sea-query/latest/sea_query/expr/struct.Expr.html#method.cust"><code>Expr::cust</code></a> are <a href="https://docs.rs/sea-query/latest/sea_query/expr/struct.Expr.html#method.cust_with_exprs"><code>Expr::cust_with_exprs</code></a> and <a href="https://docs.rs/sea-query/latest/sea_query/expr/struct.Expr.html#method.cust_with_values"><code>Expr::cust_with_values</code></a>, where <code>IntoIterator&lt;Item = Into&lt;SimpleExpr&gt;&gt;</code> and <code>IntoIterator&lt;Item = Into&lt;Value&gt;&gt;</code> parameters are accepted in addition to format the given string.</p>
+<p>The example below is self explanatory:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let values = ["asdf", "fdas"];
+
+// Evaluates to `SELECT id FROM thing WHERE field = "asdf" OR field = "fdsa"`
+Query::select()
+    .column(thing::Column::Id)
+    .from(thing::Table)
+    .and_where(Expr::cust_with_values("field = ? OR field = ?", values));
+
+// Evaluates to `SELECT id FROM thing WHERE field = "fdsa" OR field = "asdf"`
+// note the difference in order
+Query::select()
+    .column(thing::Column::Id)
+    .from(thing::Table)
+    .and_where(Expr::cust_with_values("field = $2 OR field = $1", values));
+<span class="boring">}</span></code></pre></pre>
+<p><code>Expr::cust_with_exprs</code>'s usage is the exact same except only types that implement <code>Into&lt;SimpleExpr&gt;</code> are accepted.</p>
+<h2 id="custom-functions"><a class="header" href="#custom-functions">Custom Functions</a></h2>
+<p>Custom functions are those defined in the following ways: <a href="https://dev.mysql.com/doc/refman/8.0/en/create-procedure.html">MySQL</a>, <a href="https://www.postgresql.org/docs/current/xfunc.html">PostgreSQL</a>, and <a href="https://www.sqlite.org/appfunc.html">SQLite</a>.</p>
+<p>SeaQuery provides a way to systematically call the custom functions, by the use of <a href="https://docs.rs/sea-query/latest/sea_query/types/trait.Iden.html"><code>Iden</code></a> and <a href="https://docs.rs/sea-query/latest/sea_query/func/struct.Func.html#method.cust"><code>Func::cust</code></a>.</p>
+<p>Assume we have defined a function called <code>MY_FUNCTION</code> in the database. Before we are able to invoke it, a struct that implements <code>Iden</code> should be defined first since <code>Func::cust</code> accepts a <code>IntoIden</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Method 1: Do it the hard way
+struct MyFunction;
+
+impl Iden for MyFunction {
+    fn unquoted(&amp;self, s: &amp;mut dyn Write) {
+        write!(s, "MY_FUNCTION").unwrap();
+    }
+}
+
+// Method 2: Do it the macro way
+#[derive(Iden)]
+#[iden = "MY_FUNCTION"]
+struct MyFunction;
+<span class="boring">}</span></code></pre></pre>
+<p>Now we can use <code>Func::cust</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// `MY_FUNCTION()`
+Func::cust(MyFunction);
+
+// `MY_FUNCTION('hello')`
+Func::cust(MyFunction).arg("hello");
+
+// `MY_FUNCTION('a', 'b', 'c', 'd')`
+Func::cust(MyFunction).args(["a", "b", "c", "d"]);
+<span class="boring">}</span></code></pre></pre>
+<p><code>Func::cust</code> can be used in many places, with the following being a few of them:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// `SELECT MY_FUNCTION('hello')`
+Query::select()
+    .expr(Func::cust(MyFunction).arg("hello"));
+
+// `SELECT * FROM thing WHERE MY_FUNCTION(IFNULL('field', 'asdf'))`
+Query::select()
+    .from(thing::Table)
+    .and_where(
+        Func::cust(MyFunction).arg(
+            Expr::col(thing::Column::Field)
+                .if_null("asdf")
+            )
+        );
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="create-database-connections-lazily"><a class="header" href="#create-database-connections-lazily">Create database connections lazily</a></h1>
+<blockquote>
+<p>Note that this means a new connection has to be established everytime you access the database, which might cause performance and desynchronisation issue. For example, your program might not know the database is defective until the first access.</p>
+</blockquote>
+<p>It is possible to create a <code>DatabaseConnection</code> object with no minimum active connection in the connection pool until needed. The method is to create a SQLx connection pool with <code>connect_lazy</code> function then convert it into <code>DatabaseConnection</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// MySQL
+let mysql_pool = sqlx::MySqlPool::connect_lazy("mysql://root:root@localhost").unwrap();
+let db: sea_orm::DatabaseConnection = sea_orm::SqlxMySqlConnector::from_sqlx_mysql_pool(mysql_pool);
+
+// Postgres
+let pg_pool = sqlx::PgPool::connect_lazy("postgres://root:root@localhost").unwrap();
+let db: sea_orm::DatabaseConnection = sea_orm::SqlxPostgresConnector::from_sqlx_postgres_pool(pg_pool);
+
+// SQLite
+let sqlite_pool = sqlx::SqlitePool::connect_lazy("sqlite::memory:").unwrap();
+let db: sea_orm::DatabaseConnection = sea_orm::SqlxSqliteConnector::from_sqlx_sqlite_pool(sqlite_pool);
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-schema-search-path-in-postgresql"><a class="header" href="#configuring-schema-search-path-in-postgresql">Configuring Schema Search Path in PostgreSQL</a></h1>
+<blockquote>
+<p>This only works if you use PostgreSQL, and will have no effect on any other databases supported. For documentations on the schema search path settings in PostgreSQL, see <a href="https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH">here</a>.</p>
+</blockquote>
+<p>The <a href="https://docs.rs/sea-orm/latest/sea_orm/struct.ConnectOptions.html"><code>ConnectOptions</code></a> object allows for the configuration of search path:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut options = ConnectOptions::new(url);
+
+// You need to define `path` yourself!
+options.set_schema_search_path(path);
+
+// Obtain the DatabaseConnection object here
+Database::connect(options).await?
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="automatically-execute-sql-after-connecting-to-database"><a class="header" href="#automatically-execute-sql-after-connecting-to-database">Automatically execute SQL after connecting to database</a></h1>
+<p>SeaORM does not provide direct support for it, but it is still possible. It involves establishing the connection with <a href="https://crates.io/crates/sqlx"><code>sqlx</code></a> then converting it into a <code>sea_orm::DatabaseConnection</code> object.</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Only copy the one that you are using
+type DB = sqlx::Postgres;
+type DB = sqlx::Sqlite;
+type DB = sqlx::MySql;
+<span class="boring">}</span></code></pre></pre>
+<p>Creation of sqlx options:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Method 1: Convert from the `sea_orm::ConnectOptions` that you are familiar with
+let mut sqlx_options: sqlx::pool::PoolOptions&lt;DB&gt;
+    = sea_options.pool_options().after_connect(callback);
+
+// Method 2: Create option directly in sqlx space
+let mut sqlx_options = sqlx::pool::PoolOptions&lt;DB&gt;::new()
+    // See https://docs.rs/sqlx/latest/sqlx/pool/struct.PoolOptions.html
+    .after_connect(callback);
+<span class="boring">}</span></code></pre></pre>
+<p>Connect to database with sqlx:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let sqlx_pool: Pool&lt;DB&gt; = sqlx_options.connect(url).await?;
+<span class="boring">}</span></code></pre></pre>
+<p>Convert to SeaORM's <code>DatabaseConnection</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// MySQL
+from_sqlx_mysql_pool(sqlx_pool)
+/// SQLite
+from_sqlx_sqlite_pool(sqlx_pool)
+/// PostgreSQL
+from_sqlx_postgres_pool(sqlx_pool)
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="raw-and-unprepared-statements"><a class="header" href="#raw-and-unprepared-statements">Raw and Unprepared Statements</a></h1>
+<h2 id="raw-sql"><a class="header" href="#raw-sql">Raw SQL</a></h2>
+<blockquote>
+<p>Documentation and Examples in the <a href="https://www.sea-ql.org/SeaORM/docs/basic-crud/raw-sql/">docs</a></p>
+</blockquote>
+<p>While it is highly recommended to use SeaQuery's generalized interface for creating queries, it is possible to convert raw SQL statements into queries that the API accepts, with:</p>
+<ol>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/struct.Statement.html#method.from_string"><code>sea_orm::Statement::from_string</code></a></li>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/struct.Transaction.html#method.from_sql_and_values"><code>sea_orm::Transaction::from_sql_and_values</code></a></li>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/struct.Statement.html#method.from_sql_and_values"><code>sea_orm::Statement::from_sql_and_values</code></a></li>
+</ol>
+<p>Note that they return <code>Self</code>, so you can use the result in any situations where they are respectively accepted.</p>
+<p><strong>Also note that this method requires knowing the type of database backend you are using at compile time, and you are responsible for giving it the correct sql statements.</strong></p>
+<h2 id="unprepared-sql"><a class="header" href="#unprepared-sql">Unprepared SQL</a></h2>
+<blockquote>
+<p>This method might be vulnerable to SQL injection!</p>
+</blockquote>
+<p>An unprepared SQL are ones that are directly sent to the database without being processed by the ORM. It is highly not recommended unless you can prove the statements' correctness and security.</p>
+<p>To send an unprepared SQL statement:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let db: DatabaseConnection = { /* */ };
+
+// One statement
+db.execute_unprepared("CREATE EXTENSION IF NOT EXISTS citext").await?
+
+// Multiple statements
+db.execute_unprepared("STATEMENT1; STATEMENT2; ...").await?
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="select-json-or-tuple-query-result"><a class="header" href="#select-json-or-tuple-query-result">Select JSON or tuple query result</a></h1>
+<p>For example we have the following table:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Person {
+    id: i32,
+    name: String,
+    age: u16,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Normally, we want the whole record, and do:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let result: Option&lt;person::Model&gt; = person::Entity::find_by_id(id).one(&amp;db).await?;
+<span class="boring">}</span></code></pre></pre>
+<p>This returns a <code>person::Model</code> object. But sometimes we just want some of the columns, for example, only <code>name</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let result: Option&lt;String&gt; = person::Entity::find_by_id(id)
+        .select_only()
+        .column(person::Column::Name)
+        .into_tuple()
+        .one(&amp;db)
+        .await?;
+<span class="boring">}</span></code></pre></pre>
+<p>For multiple columns, it can also output in JSON or tuple:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// JSON
+let result: Option&lt;sea_orm::query::JsonValue&gt; = person::Entity::find_by_id(id)
+        .select_only()
+        .columns([person::Column::Name, person::Column::Age])
+        .into_json()
+        .one(&amp;db)
+        .await?;
+
+// Tuple
+let result: Option&lt;(String, u16)&gt; = person::Entity::find_by_id(id)
+        .select_only()
+        .column_as([person::Column::Name, person::Column::Age])
+        .into_tuple()
+        .one(&amp;db)
+        .await?;
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="check-if-columns-in-activemodel-are-set"><a class="header" href="#check-if-columns-in-activemodel-are-set">Check if columns in ActiveModel are set</a></h1>
+<p>Given a <code>ActiveModel</code> object, one can check if a specific column is set:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let object: table::ActiveModel = { ... };
+
+// Specific field
+object.field_name.is_set()  // &lt;- do something with this boolean
+
+// Field iterator
+for column in table::Column::iter() {
+    object.get(column).is_set() // &lt;- do something with this boolean
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="count-number-of-selected-result"><a class="header" href="#count-number-of-selected-result">Count number of selected result</a></h1>
+<p>A naive way to approach this problem is to fetch the selection from the database, have it converted to a vector, then check the length of the vector. This is however, very expensive, and SeaORM provides a <a href="https://docs.rs/sea-orm/latest/sea_orm/trait.PaginatorTrait.html#method.count"><code>PaginatorTrait::count</code></a> method to count without actually fetching it. <code>PaginatorTrait</code> is implemented by <code>Select</code>, <code>SelectTwo</code>, <code>Selector</code>, and <code>SelectorRaw</code>. So one can get the count by first creating such object, then call the method. For example:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Create a Select object
+let selection = table::Entity::find();
+
+// Count the number of selection
+selection.count(db).await?
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bulk-activemodel-field-setting"><a class="header" href="#bulk-activemodel-field-setting">Bulk ActiveModel field setting</a></h1>
+<p>Imagine the situation where one has the table:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>TableName {
+    id: i32,
+    field1: T,
+    field2: T,
+    ...
+    fieldN: T,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>To create an <code>ActiveModel</code> of this table, one can painstakingly set each field to <code>ActiveValue&lt;T&gt;::NotSet</code>:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let new_thing = table_name::ActiveModel {
+    id: ActiveValue::NotSet,
+    field1: ActiveValue::NotSet,
+    field2: ActiveValue::NotSet,
+    // ...
+    fieldN: ActiveValue::NotSet,
+};
+<span class="boring">}</span></code></pre></pre>
+<p>or implement the Default trait which I will not show here.</p>
+<p>However, I shall enlighten you with a trick within SeaORM - creating the model with JSON:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let json = json!({ "fieldX": value });
+
+let new_thing = table_name::ActiveModel::from_json(json)?;
+<span class="boring">}</span></code></pre></pre>
+<p>Where <code>new_thing</code> will evaluate to <code>fieldX</code> being <code>ActiveValue&lt;T&gt;::Set</code> and all other fields set to <code>ActiveValue&lt;T&gt;::NotSet</code> automatically.</p>
+<p>Setting of field values can also be performed on existing instances of <code>ActiveModel</code> with <a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelTrait.html"><code>ActiveModelTrait::set_from_json</code></a>. <strong>Note that this method will not change the primary key value if it is set.</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="database-change-capture"><a class="header" href="#database-change-capture">Database Change Capture</a></h1>
+<blockquote>
+<p>Documentation on transaction in SeaORM: <a href="https://www.sea-ql.org/SeaORM/docs/advanced-query/transaction/">https://www.sea-ql.org/SeaORM/docs/advanced-query/transaction/</a>, and see <a href="https://docs.rs/sea-orm/0.11.3/sea_orm/trait.TransactionTrait.html#tymethod.transaction">here</a> for definitions</p>
+</blockquote>
+<p>Sometimes it is important to have a log/history of what is changed in the database. One way to do this is to enclose the changes in a transaction, and perform the change capturing.</p>
+<p>For example, here is a bundle of validation and change capture, all done within a transaction:</p>
+<pre><pre class="playground"><code class="language-rust  no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Some kind of error type
+type E;
+
+// Function to perform change capture
+async fn change_capture(object: &amp;table_name::ActiveModel) -&gt; Result&lt;(), E&gt; { ... }
+
+// Function to perform validation
+async fn validate(object: &amp;table_name::ActiveModel) -&gt; Result&lt;(), E&gt; { ... }
+
+// ...
+
+// Perform the transaction sandwiched between the validation and change capture
+db.transaction::&lt;_, ?, E&gt;(|txn| {
+    Box::pin(async move {
+        validate(&amp;object).await?;
+
+        object.operation().await?;
+
+        change_capture(&amp;object).await?;
+
+        Ok(?)
+    })
+})
+<span class="boring">}</span></code></pre></pre>
+<p>One thing about this method is that the transaction will be automatically cancelled if anything throws an error, which includes <strong>changes to the database</strong> done during change capture.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="defining-newtypes"><a class="header" href="#defining-newtypes">Defining newtypes</a></h1>
+<blockquote>
+<p>Read the documentations at <a href="https://www.sea-ql.org/SeaORM/docs/generate-entity/newtype/">https://www.sea-ql.org/SeaORM/docs/generate-entity/newtype/</a></p>
+</blockquote>
+<p>Note that any newtype defined will have to be convertible to one of the traditional database types defined in <a href="https://docs.rs/sea-query/latest/sea_query/value/enum.Value.html">sea_query::value::Value</a>, so use existing types unless really necessary.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="activemodelbehavior-not-being-triggered"><a class="header" href="#activemodelbehavior-not-being-triggered">ActiveModelBehavior not being triggered</a></h1>
+<blockquote>
+<p>Read first: <a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelBehavior.html">https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelBehavior.html</a></p>
+</blockquote>
+<p>Be careful that the behaviors only apply to the following methods:</p>
+<ol>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelTrait.html#method.insert"><code>ActiveModelTrait::insert</code></a></li>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelTrait.html#method.update"><code>ActiveModelTrait::update</code></a></li>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelTrait.html#method.save"><code>ActiveModelTrait::save</code></a></li>
+<li><a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.ActiveModelTrait.html#method.delete"><code>ActiveModelTrait::delete</code></a></li>
+</ol>
+<p>It is possible to perform similar action with the functions of <a href="https://docs.rs/sea-orm/latest/sea_orm/entity/trait.EntityTrait.html"><code>EntityTrait</code></a>, but they <strong>will not</strong> trigger the behaviors, by design.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="subquery"><a class="header" href="#subquery">Subquery</a></h1>
+<blockquote>
+<p>Read first: <a href="https://www.w3resource.com/sql/subqueries/understanding-sql-subqueries.php">Introduction to sub query in SQL</a></p>
+</blockquote>
+<blockquote>
+<p>Also read: <a href="https://www.sea-ql.org/SeaORM/docs/advanced-query/subquery/">Documentation on subquery in SeaORM</a></p>
+</blockquote>
+<p>As it is not mentioned explicitly in the documentation, one might think that SeaORM only supports subquery for <code>WHERE..IN..</code> as in the documentation. However, looking at the <a href="https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html">documentation of SeaQuery</a>, and <a href="https://docs.rs/sea-query/latest/sea_query/expr/enum.SimpleExpr.html?search=into_sub_query_statement">search for subquery</a>, one shall be presented with that SeaQuery supports subquery just like any other expressions.</p>
+<p>A <code>Select</code>/<code>Insert</code>/<code>Update</code>/<code>Delete</code>/<code>With</code> Statement can be converted to a <code>SubQueryStatement</code>, then into <code>SimpleExpr</code>, with the variant <code>SimpleExpr::SubQuery(Option&lt;SubQueryOper&gt;, Box&lt;SubQueryStatement&gt;)</code>.</p>
+<p>The application is trivial and has been left as an exercise for the reader.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
